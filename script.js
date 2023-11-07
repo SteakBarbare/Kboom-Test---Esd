@@ -10,7 +10,7 @@ loadSprite("bean", "sprites/sprCC.png");
 
 scene("game", () => {
   // define gravity
-  setGravity(1600);
+  setGravity(0);
 
   // add a game object to screen
   const player = add([
@@ -18,7 +18,7 @@ scene("game", () => {
     sprite("bean"),
     pos(80, 40),
     area(),
-    body()
+    body(),
   ]);
 
   // floor
@@ -29,7 +29,7 @@ scene("game", () => {
     anchor("botleft"),
     area(),
     body({ isStatic: true }),
-    color(127, 200, 255)
+    color(127, 200, 255),
   ]);
 
   function jump() {
@@ -46,6 +46,12 @@ scene("game", () => {
   onKeyDown("left", () => {
     player.move(-SPEED, 0);
   });
+  onKeyDown("up", () => {
+    player.move(0, -SPEED);
+  });
+  onKeyDown("down", () => {
+    player.move(0, SPEED);
+  });
   onClick(jump);
 
   function spawnTree() {
@@ -58,7 +64,7 @@ scene("game", () => {
       anchor("botleft"),
       color(255, 180, 255),
       move(LEFT, SPEED),
-      "tree"
+      "tree",
     ]);
 
     // wait a random amount of time to spawn next tree
@@ -88,12 +94,12 @@ scene("game", () => {
   });
 });
 
-scene("lose", score => {
+scene("lose", (score) => {
   add([
     sprite("bean"),
     pos(width() / 2, height() / 2 - 80),
     scale(2),
-    anchor("center")
+    anchor("center"),
   ]);
 
   // display score
@@ -101,7 +107,7 @@ scene("lose", score => {
     text(score),
     pos(width() / 2, height() / 2 + 80),
     scale(2),
-    anchor("center")
+    anchor("center"),
   ]);
 
   // go back to game with space is pressed
